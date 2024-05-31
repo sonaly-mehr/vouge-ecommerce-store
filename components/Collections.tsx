@@ -6,8 +6,11 @@ const Collections = async () => {
   const collections = await getCollections();
 
   return (
-    <div className="flex flex-col items-center gap-10 py-8 px-5">
-      <p className="text-heading1-bold">Collections</p>
+    <div className="innerWidth">
+            <div className="text-center pt-8 pb-16">
+        <h2 className="heading">Collections</h2>
+        <p className="paragraph">Showing our latest arrival on this summer</p>
+      </div>
       {!collections || collections.length === 0 ? (
         <p className="text-body-bold">No collections found</p>
       ) : (
@@ -18,7 +21,7 @@ const Collections = async () => {
                 key={collection._id}
                 src={collection.image}
                 alt={collection.title}
-                width={350}
+                width={400}
                 height={200}
                 className="rounded-lg cursor-pointer"
               />
@@ -26,7 +29,7 @@ const Collections = async () => {
           ))}
         </div>
       )}
-    </div>
+      </div>
   );
 };
 
