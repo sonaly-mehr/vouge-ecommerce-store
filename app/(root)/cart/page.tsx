@@ -108,10 +108,10 @@ const Cart = () => {
           <span>$ {totalRounded}</span>
         </div>
         <button
-          className="border rounded-lg text-body-bold bg-white py-3 w-full hover:bg-black hover:text-white"
+          className="border rounded-lg text-body-bold bg-primary py-3 w-full text-white"
           onClick={handleCheckout}
         >
-          Proceed to Checkout
+          Proceed To Checkout
         </button>
       </div>
     </div>

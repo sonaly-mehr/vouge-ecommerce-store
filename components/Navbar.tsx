@@ -4,16 +4,10 @@ import useCart from "@/lib/hooks/useCart";
 
 import { UserButton, useUser } from "@clerk/nextjs";
 import {
-  CircleUserRound,
   Menu,
   Search,
-  ShoppingCart,
   Zap,
   ChevronRight,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram,
   ChevronDown,
   UserRound,
   ShoppingBag,
@@ -29,6 +23,7 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
+import CartItems from "./CartItems";
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -72,10 +67,10 @@ const Navbar = () => {
       {/* Header */}
       <header className="sticky top-0 z-10 py-4 flex gap-2 justify-between items-center bg-white">
         <Link href="/">
-          <Image src="/logo.svg" alt="logo" width={130} height={100} />
+          <Image src="/logo.svg" alt="logo" width={130} height={100} className="w-[80px] h-auto lg:w-[130px]"/>
         </Link>
 
-        <div className="flex gap-14 items-center text-base-bold max-lg:hidden relative">
+        <div className="flex gap-8 items-center max-lg:hidden relative">
           {NAV_MENU.map((menu, i) => (
             // <Link
             //   href={menu?.link}
@@ -86,7 +81,7 @@ const Navbar = () => {
             //   {menu?.subMenu && <ChevronDown size={18} />}
             // </Link>
             <HoverCard>
-              <HoverCardTrigger className="font-normal text-lg text-dark delay-75 transition-all hover:text-primary flex items-center gap-1 cursor-pointer">
+              <HoverCardTrigger onClick={()=> router.push(menu?.link)} className="font-normal text-base text-dark delay-75 transition-all hover:text-primary flex items-center gap-1 cursor-pointer">
                 {menu?.text} {menu?.subMenu && <ChevronDown size={18} />}{" "}
               </HoverCardTrigger>
               {menu?.subMenu && (
@@ -200,7 +195,7 @@ const Navbar = () => {
           />
 
           {dropdownMenu && (
-            <div className="absolute top-12 right-5 flex flex-col gap-4 p-3 rounded-lg border bg-white text-base-bold lg:hidden">
+            <div className="absolute top-12 right-5 flex w-40 flex-col gap-4 p-3 rounded-lg border bg-white text-base-bold lg:hidden">
               <Link href="/" className="hover:text-red-1">
                 Home
               </Link>
@@ -226,7 +221,21 @@ const Navbar = () => {
             </div>
           )}
 
-<Search className="cursor-pointer"/>
+          {/* <Search className="cursor-pointer" /> */}
+          <div className="hidden lg:flex gap-3 border border-grey-2 px-3 py-1 items-center rounded-lg">
+            <input
+              className="outline-none max-sm:max-w-[120px]"
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+            <button
+              disabled={query === ""}
+              onClick={() => router.push(`/search/${query}`)}
+            >
+              <Search className="cursor-pointer h-4 w-4 hover:text-red-1" />
+            </button>
+          </div>
 
           {user ? (
             <UserButton afterSignOutUrl="/sign-in" />
@@ -235,15 +244,8 @@ const Navbar = () => {
               <UserRound />
             </Link>
           )}
-                    <Link
-            href="/cart"
-            className="relative flex items-center max-md:hidden"
-          >
-            <ShoppingBag />
-            <span className="bg-[#EB0B0B] w-[20px] h-[20px] absolute -top-[6px] -right-[12px] rounded-full text-white text-xs flex justify-center items-center">{cart.cartItems.length}</span>
-          </Link>
-          <div>
-          </div>
+
+          <CartItems cart={cart}/>
         </div>
       </header>
     </div>
